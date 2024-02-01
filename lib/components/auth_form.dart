@@ -1,8 +1,11 @@
+import 'package:chatapp/components/user_image_picker.dart';
 import 'package:chatapp/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  // Funcao que vai vir do componente pai que vai executar no submit
+  final void Function(AuthFormData) onSubmit;
+  const AuthForm({super.key, required this.onSubmit});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -13,12 +16,14 @@ class _AuthFormState extends State<AuthForm> {
   final _formData = AuthFormData();
 
   // Variáveis das animações
-  double _containerHeight = 300;
+  double _containerHeight = 250;
   bool _isNameVisible = false;
   final Duration duracao = const Duration(milliseconds: 300);
 
   void _submit() {
     final isValid = _formKey.currentState?.validate() ?? false;
+
+    widget.onSubmit(_formData);
   }
 
   @override
@@ -35,7 +40,20 @@ class _AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                // if (_formData.isSignup)
+                // AnimatedContainer(
+                //   // Vai animar uma altura de 60 a 120 quando for signup
+                //   constraints: BoxConstraints(
+                //     minHeight: _formData.isLogin ? 0 : 50,
+                //     maxHeight: _formData.isLogin ? 0 : 100,
+                //   ),
+                //   duration: duracao * 0.5,
+                //   curve: Curves.bounceIn,
+                //   child: const UserImagePicker(),
+                // ),
+                Visibility(
+                  visible: _formData.isSignup,
+                  child: const UserImagePicker(),
+                ),
                 AnimatedContainer(
                   // Vai animar uma altura de 60 a 120 quando for signup
                   constraints: BoxConstraints(
@@ -130,7 +148,7 @@ class _AuthFormState extends State<AuthForm> {
                           }
 
                           if (errors.isNotEmpty) {
-                            setState(() => _containerHeight = 450);
+                            setState(() => _containerHeight = 500);
                           }
 
                           // Se houver erros, retorna a mensagem concatenada; caso contrário, retorna null
@@ -162,7 +180,7 @@ class _AuthFormState extends State<AuthForm> {
                       _isNameVisible = !_isNameVisible;
                       // Alternar entre login e signup
                       _formData.toggleAuthMode();
-                      _containerHeight = _formData.isSignup ? 300 : 250;
+                      _containerHeight = _formData.isSignup ? 450 : 250;
                     });
                   },
                 ),
