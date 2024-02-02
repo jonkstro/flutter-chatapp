@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chatapp/components/user_image_picker.dart';
 import 'package:chatapp/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,30 @@ class _AuthFormState extends State<AuthForm> {
   final _formData = AuthFormData();
 
   // Variáveis das animações
-  double _containerHeight = 250;
+  double _containerHeight = 300;
   bool _isNameVisible = false;
   final Duration duracao = const Duration(milliseconds: 300);
 
+  void _handleImagePick(File image) {
+    _formData.image = image;
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg, textAlign: TextAlign.center),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
+  }
+
   void _submit() {
     final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+    // Se não adicionar imagem durante cadastro, exibe erro.
+    if (_formData.image == null && _formData.isSignup) {
+      return _showError('Imagem não selecionada!');
+    }
 
     widget.onSubmit(_formData);
   }
@@ -52,7 +72,7 @@ class _AuthFormState extends State<AuthForm> {
                 // ),
                 Visibility(
                   visible: _formData.isSignup,
-                  child: const UserImagePicker(),
+                  child: UserImagePicker(onImagePick: _handleImagePick),
                 ),
                 AnimatedContainer(
                   // Vai animar uma altura de 60 a 120 quando for signup
@@ -148,7 +168,7 @@ class _AuthFormState extends State<AuthForm> {
                           }
 
                           if (errors.isNotEmpty) {
-                            setState(() => _containerHeight = 500);
+                            setState(() => _containerHeight = 600);
                           }
 
                           // Se houver erros, retorna a mensagem concatenada; caso contrário, retorna null
@@ -180,7 +200,7 @@ class _AuthFormState extends State<AuthForm> {
                       _isNameVisible = !_isNameVisible;
                       // Alternar entre login e signup
                       _formData.toggleAuthMode();
-                      _containerHeight = _formData.isSignup ? 450 : 250;
+                      _containerHeight = _formData.isSignup ? 500 : 300;
                     });
                   },
                 ),
