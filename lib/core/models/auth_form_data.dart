@@ -7,6 +7,7 @@ class AuthFormData {
   String email = '';
   String password = '';
   File? image;
+  // Iniciar na tela de login
   AuthMode _mode = AuthMode.login;
 
   // Getters que irão retornar se está em login ou signup

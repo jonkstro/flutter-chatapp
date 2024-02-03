@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:chatapp/components/user_image_picker.dart';
-import 'package:chatapp/models/auth_form_data.dart';
+import 'package:chatapp/core/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -39,9 +39,9 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
     // Se não adicionar imagem durante cadastro, exibe erro.
-    if (_formData.image == null && _formData.isSignup) {
-      return _showError('Imagem não selecionada!');
-    }
+    // if (_formData.image == null && _formData.isSignup) {
+    //   return _showError('Imagem não selecionada!');
+    // }
 
     widget.onSubmit(_formData);
   }
@@ -60,16 +60,6 @@ class _AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                // AnimatedContainer(
-                //   // Vai animar uma altura de 60 a 120 quando for signup
-                //   constraints: BoxConstraints(
-                //     minHeight: _formData.isLogin ? 0 : 50,
-                //     maxHeight: _formData.isLogin ? 0 : 100,
-                //   ),
-                //   duration: duracao * 0.5,
-                //   curve: Curves.bounceIn,
-                //   child: const UserImagePicker(),
-                // ),
                 Visibility(
                   visible: _formData.isSignup,
                   child: UserImagePicker(onImagePick: _handleImagePick),

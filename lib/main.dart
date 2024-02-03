@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/auth_or_app_page.dart';
 import 'package:chatapp/pages/auth_page.dart';
 import 'package:chatapp/pages/loading_page.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const AuthPage(),
+      home: const AuthOrAppPage(),
       debugShowCheckedModeBanner: false,
     );
   }
