@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:chatapp/core/models/chat_message.dart';
 import 'package:chatapp/core/models/chat_user.dart';
 import 'package:chatapp/core/services/chat/chat_service.dart';
-import 'package:chatapp/data/dummy_data.dart';
 
 class ChatMockService implements ChatService {
   // novamente usamos static pois vão pertencer à classe e não à instancia
