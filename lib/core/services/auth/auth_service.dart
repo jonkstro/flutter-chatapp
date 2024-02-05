@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chatapp/core/models/chat_user.dart';
+import 'package:chatapp/core/services/auth/auth_firebase_service.dart';
 import 'package:chatapp/core/services/auth/auth_mock_service.dart';
 
 // Essa classe é abstrata pois servirá como uma interface para os serviços mockados e do firebase
@@ -30,7 +31,7 @@ abstract class AuthService {
   factory AuthService() {
     /// Onde for chamado AuthService (AuthPage por exemplo) ele irá chamar a implementação que tiver
     /// configurada  abaixo (AuthMockService ou AuthFirebaseService) ao invés de chamar a interface.
-    return AuthMockService();
-    // return AuthFirebaseService();
+    // return AuthMockService();
+    return AuthFirebaseService();
   }
 }
