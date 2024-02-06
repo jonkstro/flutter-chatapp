@@ -1,16 +1,24 @@
 import 'package:chatapp/core/models/chat_user.dart';
 import 'package:chatapp/core/services/auth/auth_service.dart';
+import 'package:chatapp/core/services/notifications/chat_notification_service.dart';
 import 'package:chatapp/pages/auth_page.dart';
 import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/loading_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthOrAppPage extends StatelessWidget {
   const AuthOrAppPage({super.key});
 
   Future<void> init(BuildContext context) async {
     await Firebase.initializeApp();
+
+    // Testar adicionando if(mounted) pra ver se some o erro
+    await Provider.of<ChatNotificationService>(
+      context,
+      listen: false,
+    ).init();
   }
 
   @override
